@@ -50,7 +50,17 @@ function App() {
       </header>
       <div className="App-Star-Ship-Cards">
         {starships[0].map((starship, idx) => 
-          <StarShipCard key={idx} starships={starship} name={starship.name} />
+          <StarShipCard 
+          key={idx} 
+          starships={starship} 
+          name={starship.name}
+          model={starship.model}
+          manufacturer={starship.manufacturer}
+          starshipClass={starship.starship_class}
+          passengers={starship.passengers}
+          hyperdrive={starship.hyperdrive_rating}
+          cost={starship.cost_in_credits}
+          />
         )}
       </div>
     </div>
