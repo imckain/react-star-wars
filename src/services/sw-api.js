@@ -1,5 +1,12 @@
-const BASE_URL = 'https://swapi.dev/api/starships/'
 
-export function getAllStarships() {
-    return fetch (`${BASE_URL}`).then(res => res.json())
+export function getAllStarships(pageUrl) {
+    if (pageUrl) {
+        pageUrl = pageUrl.split("http");
+        pageUrl.shift()
+        pageUrl.unshift('https')
+        pageUrl = pageUrl.join('')
+    }
+    const url = pageUrl || 'https://swapi.dev/api/starships/'
+    return fetch (url)
+    .then(res => res.json())
 };

@@ -4,42 +4,28 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 import { StarShipCard } from './components/Starships/StarShipCard';
-
 import { getAllStarships } from './services/sw-api';
 
 function App() {
-
+  
   const [appData, setAppData] = useState({
-    starships: [],
-    // name: []
+    count: null,
+    next: null,
+    previous: null,
+    results: [],
   });
 
-  
+  const results = appData.results
 
-  
-  
-  
-  
-  async function getAppData() {
-    const starshipData = await getAllStarships();
-    // console.log(starshipData);
-    setAppData({
-      starships: starshipData.results,
-      // name: starshipData.name
-    })
+  async function getAppData(url) {
+    const starshipData = await getAllStarships(url);
+    setAppData(starshipData)
   };
   
   useEffect(() => {
     getAppData();
   }, []);
-  
-  
-  const starships = [appData.starships]
-  // const name = [appData.name]
 
-  // console.log(name)
-  console.log(starships)
-  console.log(appData)
 
   return (
     <div className="App">
@@ -49,7 +35,7 @@ function App() {
         <i class="fab fa-galactic-republic"></i>
       </header>
       <div className="App-Star-Ship-Cards">
-        {starships[0].map((starship, idx) => 
+        {results.map((starship, idx) => 
           <StarShipCard 
           key={idx} 
           starships={starship} 
@@ -62,6 +48,10 @@ function App() {
           cost={starship.cost_in_credits}
           />
         )}
+      </div>
+      <div className="pagination">
+        <button onClick={() => getAppData(appData.previous)}>Previous Page</button>
+        <button onClick={() => getAppData(appData.next)}>Next Page</button>
       </div>
     </div>
   );
